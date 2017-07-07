@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\CMakeFiles\effc8c3cac4dc96501e4d95b1ef75696\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{1A06B491-1AB4-35FA-BBD4-C4FFCDB34392}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

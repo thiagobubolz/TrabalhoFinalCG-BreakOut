@@ -1,0 +1,15 @@
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/CMakeFiles/INSTALL.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/CMakeFiles/CG_UFPel.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/CMakeFiles/ALL_BUILD.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/CMakeFiles/ZERO_CHECK.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/CMakeFiles/GLEW_190.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/CMakeFiles/ANTTWEAKBAR_116_OGLCORE_GLFW.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/CMakeFiles/INSTALL.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/glfw-3.0.3/CMakeFiles/INSTALL.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/glfw-3.0.3/CMakeFiles/ALL_BUILD.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/glfw-3.0.3/src/CMakeFiles/GLFW_303.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/glfw-3.0.3/src/CMakeFiles/INSTALL.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/zlib.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/assimp-3.0.1270/contrib/zlib/CMakeFiles/INSTALL.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/assimp-3.0.1270/code/CMakeFiles/assimp.dir
+C:/Users/thiag/Desktop/CG/TrabalhoFinalCG-BreakOut/Projeto/external/assimp-3.0.1270/code/CMakeFiles/INSTALL.dir
