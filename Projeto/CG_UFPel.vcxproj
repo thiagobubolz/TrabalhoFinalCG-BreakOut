@@ -327,7 +327,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\sources\texture.cpp" />
     <ClCompile Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\sources\vboindexer.cpp" />
     <ClCompile Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\sources\glerror.cpp" />
+    <ClCompile Include="sources\Gerenciador.cpp" />
     <ClCompile Include="sources\Malha.cpp" />
+    <ClCompile Include="sources\Modelo.cpp" />
     <ClInclude Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\include\controls.hpp" />
     <ClInclude Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\include\objloader.hpp" />
     <ClInclude Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\include\quaternion_utils.hpp" />
@@ -337,7 +339,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\include\texture.hpp" />
     <ClInclude Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\include\vboindexer.hpp" />
     <ClInclude Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\include\glerror.hpp" />
-    <ClInclude Include="include\Malha.h" />
+    <ClInclude Include="include\Gerenciador.hpp" />
+    <ClInclude Include="include\Malha.hpp" />
+    <ClInclude Include="include\Modelo.hpp" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\ZERO_CHECK.vcxproj">
@@ -364,6 +369,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{18A2A76B-430B-38C7-9031-D5A1BBD42FDB}</Project>
       <Name>zlib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CG_UFPel.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

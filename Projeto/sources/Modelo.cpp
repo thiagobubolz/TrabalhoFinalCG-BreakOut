@@ -19,11 +19,7 @@ using namespace glm;
 
 #include <glerror.hpp>
 
-Modelo::Modelo(Malha &malha, glm::vec3 position){
-	this->malha = &malha;
+Modelo::Modelo(int idMalha, glm::vec3 position){
+	this->idMalha = idMalha;
 	this->TransformacaoModelo = mat4(1.0f) * translate(mat4(1.0f), position);
-}
-
-Modelo::~Modelo()
-{
 }

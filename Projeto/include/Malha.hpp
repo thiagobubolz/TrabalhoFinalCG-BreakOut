@@ -33,12 +33,8 @@ public:
 	GLuint normalbuffer;
 	GLuint elementbuffer;
 
-	Malha::Malha(char * path);
+	Malha::Malha();
 
-	void CarregaMalhas();
-	void DeletaBuffer();
-	void BindBuffer();
-
-	~Malha();
+	Malha::Malha(int idMalha);
 };
 

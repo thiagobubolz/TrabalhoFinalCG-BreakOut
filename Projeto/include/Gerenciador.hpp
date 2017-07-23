@@ -1,5 +1,6 @@
 #pragma once
 #include "..\include\Malha.hpp"
+#include "..\include\Modelo.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
@@ -20,12 +21,15 @@ using namespace glm;
 
 #include <glerror.hpp>
 
-class Modelo
+
+class Gerenciador
 {
 public:
-	int idMalha;
-	glm::mat4 TransformacaoModelo;
+	std::vector<Malha> Malhas;
+	std::vector<Modelo> Modelos;
 
-	Modelo::Modelo(int idMalha, glm::vec3 position);
+	Gerenciador::Gerenciador();
+
+	void Gerenciador::DesenhaModelos(Gerenciador &manager, int &nUseMouse, GLuint &programID, GLuint &MatrixID, GLuint &ViewMatrixID, GLuint &ModelMatrixID, GLuint &Texture, GLuint &TextureID, GLuint &LightID);
 };
 

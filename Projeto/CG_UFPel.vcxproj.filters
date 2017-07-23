@@ -32,6 +32,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\Malha.cpp" />
+    <ClCompile Include="sources\Modelo.cpp" />
+    <ClCompile Include="sources\Gerenciador.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\include\controls.hpp">
@@ -61,7 +63,10 @@
     <ClInclude Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\include\glerror.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Malha.h" />
+    <ClInclude Include="include\Malha.hpp" />
+    <ClInclude Include="include\Modelo.hpp" />
+    <ClInclude Include="include\Gerenciador.hpp" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\thiag\Desktop\CG\TrabalhoFinalCG-BreakOut\Projeto\CMakeLists.txt" />
@@ -73,5 +78,8 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{7E914CD2-93ED-3884-8B77-D70480748985}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CG_UFPel.rc" />
   </ItemGroup>
 </Project>
