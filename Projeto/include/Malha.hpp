@@ -35,6 +35,9 @@ public:
 
 	Malha::Malha(char * path);
 
+	void CarregaMalhas();
+	void DeletaBuffer();
+	void BindBuffer();
 
 	~Malha();
 };

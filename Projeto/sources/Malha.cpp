@@ -72,14 +72,6 @@ void Malha::CarregaMalhas() {
 	// Index buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 
-	// Draw the triangles !
-	glDrawElements(
-		GL_TRIANGLES,        // mode
-		indices.size(),      // count
-		GL_UNSIGNED_SHORT,   // type
-		(void*)0             // element array buffer offset
-	);
-
 }
 
 void Malha::DeletaBuffer() {
