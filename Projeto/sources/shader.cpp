@@ -35,15 +35,6 @@ GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_pat
 		return 0;
 	}
 
-	// Read the Fragment Shader code from the file
-	std::string FragmentShaderCode;
-	std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
-	if (FragmentShaderStream.is_open()) {
-		std::string Line = "";
-		while (getline(FragmentShaderStream, Line))
-			FragmentShaderCode += "\n" + Line;
-		FragmentShaderStream.close();
-	}
 
 	// Read the Geometry Shader code from the file
 	std::string GeometryShaderCode;
@@ -61,6 +52,16 @@ GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_pat
 			getchar();
 			return 0;
 		}
+	}
+
+	// Read the Fragment Shader code from the file
+	std::string FragmentShaderCode;
+	std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
+	if (FragmentShaderStream.is_open()) {
+		std::string Line = "";
+		while (getline(FragmentShaderStream, Line))
+			FragmentShaderCode += "\n" + Line;
+		FragmentShaderStream.close();
 	}
 
 	GLint Result = GL_FALSE;

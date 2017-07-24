@@ -9,6 +9,7 @@
 
 // Include GLM
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 using namespace glm;
 
@@ -44,6 +45,11 @@ void Gerenciador::DesenhaModelos(Gerenciador &manager, int &nUseMouse, GLuint &p
 		glm::mat4 ViewMatrix = getViewMatrix() * translate(mat4(1.0f), vec3(0,0,-20));
 		glm::mat4 ModelMatrix = glm::mat4(1.0) * manager.Modelos[i].TransformacaoModelo;
 		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+
+		glUniformMatrix4fv(glGetUniformLocation(programID, "projection"), 1, GL_FALSE, glm::value_ptr(getProjectionMatrix()));
+		glUniformMatrix4fv(glGetUniformLocation(programID, "view"), 1, GL_FALSE, glm::value_ptr(getViewMatrix()* translate(mat4(1.0f), vec3(0, 0, -10))));
+		glUniformMatrix4fv(glGetUniformLocation(programID, "model"), 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0) * manager.Modelos[i].TransformacaoModelo));
+		glUniform1f(glGetUniformLocation(programID, "time"), glfwGetTime());
 
 		// Send our transformation to the currently bound shader,
 		// in the "MVP" uniform
@@ -111,5 +117,6 @@ void Gerenciador::DesenhaModelos(Gerenciador &manager, int &nUseMouse, GLuint &p
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
+
 	}
 }

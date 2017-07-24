@@ -137,6 +137,8 @@ int main(void)
 	GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
 
 	manager.Modelos.push_back(Modelo(0, vec3(0)));
+	manager.Modelos.push_back(Modelo(1, vec3(2.5, 2.5, 4)));
+	manager.Modelos.push_back(Modelo(2, vec3(-3)));
 
 	// For speed computation
 	double lastTime = glfwGetTime();
@@ -144,6 +146,8 @@ int main(void)
 
 	do{
         //check_gl_error();
+		// Clear the screen
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         //use the control key to free the mouse
 		if (glfwGetKey(g_pWindow, GLFW_KEY_LEFT_CONTROL) != GLFW_PRESS)
@@ -154,6 +158,8 @@ int main(void)
 		// Measure speed
 		double currentTime = glfwGetTime();
 		nbFrames++;
+		glUniform1f(glGetUniformLocation(programID, "time"), currentTime);
+
 		if (currentTime - lastTime >= 1.0){ // If last prinf() was more than 1sec ago
 			// printf and reset
 			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
@@ -164,12 +170,11 @@ int main(void)
 		manager.DesenhaModelos(manager, nUseMouse, programID, MatrixID, ViewMatrixID, ModelMatrixID, Texture, TextureID, LightID);
 
 		// Draw tweak bars
-		TwDraw();
+		//TwDraw();
 		// Swap buffers
 		glfwSwapBuffers(g_pWindow);
 		glfwPollEvents();
-		// Clear the screen
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(g_pWindow, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
