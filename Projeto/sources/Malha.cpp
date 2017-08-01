@@ -16,7 +16,7 @@ Malha::Malha(int idMalha){
 	else if (idMalha == 1) {
 		loadOBJ("mesh/goose.obj", vertices, uvs, normals);
 	}
-	else {
+	else if (idMalha == 2) {
 		loadOBJ("mesh/cube.obj", vertices, uvs, normals);
 	}
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);

@@ -26,10 +26,14 @@ class Gerenciador
 {
 public:
 	std::vector<Malha> Malhas;
-	std::vector<Modelo> Modelos;
+	std::vector<Modelo> Cubos;
+	std::vector<Modelo> Player;
+	Modelo Bola = Modelo(0, vec3(0));
 
 	Gerenciador::Gerenciador();
 
-	void Gerenciador::DesenhaModelos(Gerenciador &manager, int &nUseMouse, GLuint &programID, GLuint &MatrixID, GLuint &ViewMatrixID, GLuint &ModelMatrixID, GLuint &Texture, GLuint &TextureID, GLuint &LightID);
+	void Gerenciador::DesenhaCubos(Gerenciador &manager, int &nUseMouse, GLuint &programID, GLuint &MatrixID, GLuint &ViewMatrixID, GLuint &ModelMatrixID, GLuint &Texture, GLuint &TextureID, GLuint &LightID);
+	void Gerenciador::DesenhaPlayer(Gerenciador &manager, int &nUseMouse, GLuint &programID, GLuint &MatrixID, GLuint &ViewMatrixID, GLuint &ModelMatrixID, GLuint &Texture, GLuint &TextureID, GLuint &LightID);
+	void Gerenciador::DesenhaBola(Gerenciador &manager, int &nUseMouse, GLuint &programID, GLuint &MatrixID, GLuint &ViewMatrixID, GLuint &ModelMatrixID, GLuint &Texture, GLuint &TextureID, GLuint &LightID);
 };
 

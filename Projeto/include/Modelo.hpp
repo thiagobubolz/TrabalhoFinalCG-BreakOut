@@ -25,6 +25,9 @@ class Modelo
 public:
 	int idMalha;
 	glm::mat4 TransformacaoModelo;
+	vec3 position;
+	vec3 velocidade;
+
 
 	Modelo::Modelo(int idMalha, glm::vec3 position);
 };

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include <random>
 
 // Include GLEW
 #include <GL/glew.h>
@@ -28,6 +29,13 @@ using namespace glm;
 #include <objloader.hpp>
 #include <vboindexer.hpp>
 #include <glerror.hpp>
+std::ostream &operator<< (std::ostream &out, const glm::vec3 &vec) {
+	out << "{"
+		<< vec.x << " " << vec.y << " " << vec.z
+		<< "}";
+
+	return out;
+}
 
 void WindowSizeCallBack(GLFWwindow *pWindow, int nWidth, int nHeight) {
 
@@ -37,8 +45,154 @@ void WindowSizeCallBack(GLFWwindow *pWindow, int nWidth, int nHeight) {
 	TwWindowSize(g_nWidth, g_nHeight);
 }
 
-int main(void)
-{
+void ConstroiCenario1(Gerenciador &manager) {
+	int j = -23;
+	for (int i = 0; i < 24; i++) {
+		manager.Cubos.push_back(Modelo(2, vec3(0)));
+		manager.Cubos[i].position = vec3(j, 20, 0);
+		j = j + 2;
+	}
+	j = -21;
+	for (int i = 24; i < 46; i++) {
+		manager.Cubos.push_back(Modelo(2, vec3(0)));
+		manager.Cubos[i].position = vec3(j, 18, 0);
+		j = j + 2;
+	}
+}
+void ConstroiCenario2(Gerenciador &manager) {
+	int j = -21;
+	for (int i = 0; i < 21; i++) {
+		manager.Cubos.push_back(Modelo(2, vec3(0)));
+		manager.Cubos[i].position = vec3(j, 20, 0);
+		j = j + 2;
+	}
+	j = -19;
+	for (int i = 21; i < 40; i++) {
+		manager.Cubos.push_back(Modelo(2, vec3(0)));
+		manager.Cubos[i].position = vec3(j, 17, 0);
+		j = j + 2;
+	}
+	j = -21;
+	for (int i = 40; i < 61; i++) {
+		manager.Cubos.push_back(Modelo(2, vec3(0)));
+		manager.Cubos[i].position = vec3(j, 14, 0);
+		j = j + 2;
+	}
+}
+void ConstroiCenario3(Gerenciador &manager) {
+	int j = -15;
+	for (int i = 0; i < 15; i++) {
+		manager.Cubos.push_back(Modelo(2, vec3(0)));
+		manager.Cubos[i].position = vec3(j, 20, 0);
+		j = j + 2;
+	}
+	j = -13;
+	for (int i = 15; i < 28; i++) {
+		manager.Cubos.push_back(Modelo(2, vec3(0)));
+		manager.Cubos[i].position = vec3(j, 17, 0);
+		j = j + 2;
+	}
+}
+
+void ConstroiCenario4(Gerenciador &manager) {
+	int j = -15;
+	for (int i = 0; i < 15; i++) {
+		manager.Cubos.push_back(Modelo(2, vec3(0)));
+		manager.Cubos[i].position = vec3(j, 16, 0);
+		j = j + 2;
+	}
+	j = -13;
+	for (int i = 15; i < 28; i++) {
+		manager.Cubos.push_back(Modelo(2, vec3(0)));
+		manager.Cubos[i].position = vec3(j, 13, 0);
+		j = j + 2;
+	}
+}
+
+
+glm::vec3 compass[] = {
+	glm::vec3(0.0f, 1.0f, 0.0f),	// up
+	glm::vec3(1.0f, 0.0f, 0.0f),	// right
+	glm::vec3(0.0f, -1.0f, 0.0f),	// down
+	glm::vec3(-1.0f, 0.0f, 0.0f)	// left
+};
+
+
+void CheckColisionCubos(Gerenciador & manager) {
+	bool colisionX_Box = false;
+	bool colisionY_Box = false;
+	for (int i = 0; i < manager.Cubos.size(); i++) {
+		if (manager.Bola.position.x + 1.5 >= manager.Cubos[i].position.x && manager.Cubos[i].position.x + 1.5 >= manager.Bola.position.x) {
+			colisionX_Box = true;
+		}
+		if (manager.Bola.position.y + 1.5 >= manager.Cubos[i].position.y && manager.Cubos[i].position.y + 1.5 >= manager.Bola.position.y) {
+			colisionY_Box = true;
+		}
+		if (colisionX_Box && colisionY_Box) {
+			float max = 0.0f;
+			int best_match = -1;
+			for (int i = 0; i < 4; i++) {
+				float dot_product = glm::dot(glm::normalize(manager.Bola.velocidade), compass[i]);
+				if (dot_product > max)
+				{
+					max = dot_product;
+					best_match = i;
+				}
+			}
+			if (best_match == 1 || best_match == 3)
+			{
+				manager.Bola.velocidade.x = -manager.Bola.velocidade.x;
+			}
+			else
+			{
+				manager.Bola.velocidade.y = -manager.Bola.velocidade.y;
+			}
+			manager.Cubos.erase(manager.Cubos.begin() + i);
+		}
+		colisionX_Box = false;
+		colisionY_Box = false;
+	}
+}
+
+void CheckColisionPLayer(Gerenciador &manager) {
+	bool colisionX_Player = false;
+	bool colisionY_Player = false;
+	for (int i = 0; i < manager.Player.size(); i++) {
+		if (manager.Bola.position.x + 1.6 >= manager.Player[i].position.x && manager.Player[i].position.x + 1.0 >= manager.Bola.position.x) {
+			colisionX_Player = true;
+		}
+		if (manager.Bola.position.y + 2.0 >= manager.Player[i].position.y && manager.Player[i].position.y + 1.5 >= manager.Bola.position.y) {
+			colisionY_Player = true;
+		}
+		if (colisionX_Player && colisionY_Player) {
+			float max = 0.0f;
+			int best_match = -1;
+			for (int i = 0; i < 4; i++) {
+				float dot_product = glm::dot(glm::normalize(manager.Bola.velocidade), compass[i]);
+				if (dot_product > max)
+				{
+					max = dot_product;
+					best_match = i;
+				}
+			}
+			if (best_match == 1 || best_match == 3)
+			{
+				manager.Bola.velocidade.y = -manager.Bola.velocidade.y;
+			}
+			else
+			{
+				manager.Bola.velocidade.x = -manager.Bola.velocidade.x;
+			}
+		}
+		colisionX_Player = false;
+		colisionY_Player = false;
+	}
+}
+
+int main(void){
+	float direcao = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	direcao = direcao / 0.5;
+
 	int nUseMouse = 0;
 
 	// Initialise GLFW
@@ -98,7 +252,7 @@ int main(void)
 	glfwSetCursorPos(g_pWindow, g_nWidth / 2, g_nHeight / 2);
 
 	// Dark blue background
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
@@ -113,7 +267,8 @@ int main(void)
 	glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("shaders/StandardShading.vertexshader", "shaders/StandardShading.fragmentshader", "shaders/ExplosionGeometryShader.gs");
+	//GLuint programID = LoadShaders("shaders/StandardShading.vertexshader", "shaders/StandardShading.fragmentshader", "shaders/ExplosionGeometryShader.gs");
+	GLuint programID = LoadShaders("shaders/StandardShading.vertexshader", "shaders/StandardShading.fragmentshader");
 
 	// Get a handle for our "MVP" uniform
 	GLuint MatrixID      = glGetUniformLocation(programID, "MVP");
@@ -135,10 +290,14 @@ int main(void)
 	// Get a handle for our "LightPosition" uniform
 	glUseProgram(programID);
 	GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
+	manager.Bola.idMalha = 0;
+	manager.Bola.position = vec3(0,0, 0);
+	manager.Bola.velocidade = vec3(0.02,0.02,0);
+	manager.Player.push_back(Modelo(2, vec3(-2, -10, 0)));
+	manager.Player.push_back(Modelo(2, vec3(0, -10, 0)));
+	manager.Player.push_back(Modelo(2, vec3(2, -10, 0)));
 
-	manager.Modelos.push_back(Modelo(0, vec3(0)));
-	manager.Modelos.push_back(Modelo(1, vec3(2.5, 2.5, 4)));
-	manager.Modelos.push_back(Modelo(2, vec3(-3)));
+	ConstroiCenario2(manager);
 
 	// For speed computation
 	double lastTime = glfwGetTime();
@@ -150,10 +309,33 @@ int main(void)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         //use the control key to free the mouse
-		if (glfwGetKey(g_pWindow, GLFW_KEY_LEFT_CONTROL) != GLFW_PRESS)
-			nUseMouse = 0;
-		else
-			nUseMouse = 1;
+		if (glfwGetKey(g_pWindow, GLFW_KEY_D) != GLFW_PRESS) {
+			for (int i = 0; i < manager.Player.size(); i++) {
+				manager.Player[i].position.x = manager.Player[i].position.x - 0.03f;
+			}
+		}
+		if (glfwGetKey(g_pWindow, GLFW_KEY_A) != GLFW_PRESS) {
+			for (int i = 0; i < manager.Player.size(); i++) {
+				manager.Player[i].position.x = manager.Player[i].position.x + 0.03f;
+			}
+		}
+
+		manager.Bola.position = manager.Bola.position + manager.Bola.velocidade;
+
+		if (manager.Bola.position.x >= 24 || manager.Bola.position.x <= -24) {
+			manager.Bola.velocidade.x = manager.Bola.velocidade.x * -1.0f;
+		}
+		else if (manager.Bola.position.y >= 24) {
+			manager.Bola.velocidade.y = manager.Bola.velocidade.y * -1.0f;
+		}
+
+		CheckColisionPLayer(manager);
+		CheckColisionCubos(manager);
+		if (manager.Bola.position.y <= -11) {
+			manager.Bola.position = vec3(0, 0, 0);
+			manager.Bola.velocidade = vec3(0.02, 0.02, 0);
+		}
+
 
 		// Measure speed
 		double currentTime = glfwGetTime();
@@ -167,7 +349,9 @@ int main(void)
 			lastTime += 1.0;
 		}
 
-		manager.DesenhaModelos(manager, nUseMouse, programID, MatrixID, ViewMatrixID, ModelMatrixID, Texture, TextureID, LightID);
+		manager.DesenhaCubos(manager, nUseMouse, programID, MatrixID, ViewMatrixID, ModelMatrixID, Texture, TextureID, LightID);
+		manager.DesenhaPlayer(manager, nUseMouse, programID, MatrixID, ViewMatrixID, ModelMatrixID, Texture, TextureID, LightID);
+		manager.DesenhaBola(manager, nUseMouse, programID, MatrixID, ViewMatrixID, ModelMatrixID, Texture, TextureID, LightID);
 
 		// Draw tweak bars
 		//TwDraw();
