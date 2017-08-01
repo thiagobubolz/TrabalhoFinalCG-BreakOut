@@ -45,70 +45,69 @@ void WindowSizeCallBack(GLFWwindow *pWindow, int nWidth, int nHeight) {
 	TwWindowSize(g_nWidth, g_nHeight);
 }
 
-void ConstroiCenario1(Gerenciador &manager) {
-	int j = -23;
-	for (int i = 0; i < 24; i++) {
-		manager.Cubos.push_back(Modelo(2, vec3(0)));
-		manager.Cubos[i].position = vec3(j, 20, 0);
-		j = j + 2;
+void ConstroiCenario(Gerenciador &manager, int numCenario) {
+	if (numCenario == 1) {
+		int j = -15;
+		for (int i = 0; i < 15; i++) {
+			manager.Cubos.push_back(Modelo(2, vec3(0)));
+			manager.Cubos[i].position = vec3(j, 20, 0);
+			j = j + 2;
+		}
+		j = -13;
+		for (int i = 15; i < 28; i++) {
+			manager.Cubos.push_back(Modelo(2, vec3(0)));
+			manager.Cubos[i].position = vec3(j, 17, 0);
+			j = j + 2;
+		}
+	}else if (numCenario == 2) {
+		int j = -15;
+		for (int i = 0; i < 15; i++) {
+			manager.Cubos.push_back(Modelo(2, vec3(0)));
+			manager.Cubos[i].position = vec3(j, 16, 0);
+			j = j + 2;
+		}
+		j = -13;
+		for (int i = 15; i < 28; i++) {
+			manager.Cubos.push_back(Modelo(2, vec3(0)));
+			manager.Cubos[i].position = vec3(j, 13, 0);
+			j = j + 2;
+		}
+	}else if (numCenario == 3) {
+		int j = -23;
+		for (int i = 0; i < 24; i++) {
+			manager.Cubos.push_back(Modelo(2, vec3(0)));
+			manager.Cubos[i].position = vec3(j, 20, 0);
+			j = j + 2;
+		}
+		j = -21;
+		for (int i = 24; i < 46; i++) {
+			manager.Cubos.push_back(Modelo(2, vec3(0)));
+			manager.Cubos[i].position = vec3(j, 18, 0);
+			j = j + 2;
+		}
 	}
-	j = -21;
-	for (int i = 24; i < 46; i++) {
-		manager.Cubos.push_back(Modelo(2, vec3(0)));
-		manager.Cubos[i].position = vec3(j, 18, 0);
-		j = j + 2;
+	else if (numCenario == 4) {
+		int j = -21;
+		for (int i = 0; i < 21; i++) {
+			manager.Cubos.push_back(Modelo(2, vec3(0)));
+			manager.Cubos[i].position = vec3(j, 20, 0);
+			j = j + 2;
+		}
+		j = -19;
+		for (int i = 21; i < 40; i++) {
+			manager.Cubos.push_back(Modelo(2, vec3(0)));
+			manager.Cubos[i].position = vec3(j, 17, 0);
+			j = j + 2;
+		}
+		j = -21;
+		for (int i = 40; i < 61; i++) {
+			manager.Cubos.push_back(Modelo(2, vec3(0)));
+			manager.Cubos[i].position = vec3(j, 14, 0);
+			j = j + 2;
+		}
 	}
+	
 }
-void ConstroiCenario2(Gerenciador &manager) {
-	int j = -21;
-	for (int i = 0; i < 21; i++) {
-		manager.Cubos.push_back(Modelo(2, vec3(0)));
-		manager.Cubos[i].position = vec3(j, 20, 0);
-		j = j + 2;
-	}
-	j = -19;
-	for (int i = 21; i < 40; i++) {
-		manager.Cubos.push_back(Modelo(2, vec3(0)));
-		manager.Cubos[i].position = vec3(j, 17, 0);
-		j = j + 2;
-	}
-	j = -21;
-	for (int i = 40; i < 61; i++) {
-		manager.Cubos.push_back(Modelo(2, vec3(0)));
-		manager.Cubos[i].position = vec3(j, 14, 0);
-		j = j + 2;
-	}
-}
-void ConstroiCenario3(Gerenciador &manager) {
-	int j = -15;
-	for (int i = 0; i < 15; i++) {
-		manager.Cubos.push_back(Modelo(2, vec3(0)));
-		manager.Cubos[i].position = vec3(j, 20, 0);
-		j = j + 2;
-	}
-	j = -13;
-	for (int i = 15; i < 28; i++) {
-		manager.Cubos.push_back(Modelo(2, vec3(0)));
-		manager.Cubos[i].position = vec3(j, 17, 0);
-		j = j + 2;
-	}
-}
-
-void ConstroiCenario4(Gerenciador &manager) {
-	int j = -15;
-	for (int i = 0; i < 15; i++) {
-		manager.Cubos.push_back(Modelo(2, vec3(0)));
-		manager.Cubos[i].position = vec3(j, 16, 0);
-		j = j + 2;
-	}
-	j = -13;
-	for (int i = 15; i < 28; i++) {
-		manager.Cubos.push_back(Modelo(2, vec3(0)));
-		manager.Cubos[i].position = vec3(j, 13, 0);
-		j = j + 2;
-	}
-}
-
 
 glm::vec3 compass[] = {
 	glm::vec3(0.0f, 1.0f, 0.0f),	// up
@@ -116,7 +115,6 @@ glm::vec3 compass[] = {
 	glm::vec3(0.0f, -1.0f, 0.0f),	// down
 	glm::vec3(-1.0f, 0.0f, 0.0f)	// left
 };
-
 
 void CheckColisionCubos(Gerenciador & manager) {
 	bool colisionX_Box = false;
@@ -158,10 +156,10 @@ void CheckColisionPLayer(Gerenciador &manager) {
 	bool colisionX_Player = false;
 	bool colisionY_Player = false;
 	for (int i = 0; i < manager.Player.size(); i++) {
-		if (manager.Bola.position.x + 1.6 >= manager.Player[i].position.x && manager.Player[i].position.x + 1.0 >= manager.Bola.position.x) {
+		if (manager.Bola.position.x + 1.6666666666666 >= manager.Player[i].position.x && manager.Player[i].position.x + 1.111111111111111 >= manager.Bola.position.x) {
 			colisionX_Player = true;
 		}
-		if (manager.Bola.position.y + 2.0 >= manager.Player[i].position.y && manager.Player[i].position.y + 1.5 >= manager.Bola.position.y) {
+		if (manager.Bola.position.y + 2.1111111111111111 >= manager.Player[i].position.y && manager.Player[i].position.y + 1.555555555555555555 >= manager.Bola.position.y) {
 			colisionY_Player = true;
 		}
 		if (colisionX_Player && colisionY_Player) {
@@ -291,24 +289,24 @@ int main(void){
 	glUseProgram(programID);
 	GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
 	manager.Bola.idMalha = 0;
-	manager.Bola.position = vec3(0,0, 0);
-	manager.Bola.velocidade = vec3(0.02,0.02,0);
+	manager.Bola.position = vec3(2, 1, 0);
+	manager.Bola.velocidade = vec3(0.02222222222222,0.02222222222222,0);
 	manager.Player.push_back(Modelo(2, vec3(-2, -10, 0)));
 	manager.Player.push_back(Modelo(2, vec3(0, -10, 0)));
 	manager.Player.push_back(Modelo(2, vec3(2, -10, 0)));
 
-	ConstroiCenario2(manager);
+	int numCenario = 1;
+
+	ConstroiCenario(manager, numCenario);
 
 	// For speed computation
 	double lastTime = glfwGetTime();
 	int nbFrames    = 0;
 
 	do{
-        //check_gl_error();
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //use the control key to free the mouse
 		if (glfwGetKey(g_pWindow, GLFW_KEY_D) != GLFW_PRESS) {
 			for (int i = 0; i < manager.Player.size(); i++) {
 				manager.Player[i].position.x = manager.Player[i].position.x - 0.03f;
@@ -320,8 +318,6 @@ int main(void){
 			}
 		}
 
-		manager.Bola.position = manager.Bola.position + manager.Bola.velocidade;
-
 		if (manager.Bola.position.x >= 24 || manager.Bola.position.x <= -24) {
 			manager.Bola.velocidade.x = manager.Bola.velocidade.x * -1.0f;
 		}
@@ -332,10 +328,16 @@ int main(void){
 		CheckColisionPLayer(manager);
 		CheckColisionCubos(manager);
 		if (manager.Bola.position.y <= -11) {
-			manager.Bola.position = vec3(0, 0, 0);
+			manager.Bola.position = vec3(2, 1, 0);
 			manager.Bola.velocidade = vec3(0.02, 0.02, 0);
 		}
 
+		if (manager.Cubos.empty() && numCenario < 4) {
+			numCenario++;
+			ConstroiCenario(manager, numCenario);
+		}
+
+		manager.Bola.position = manager.Bola.position + manager.Bola.velocidade;
 
 		// Measure speed
 		double currentTime = glfwGetTime();
