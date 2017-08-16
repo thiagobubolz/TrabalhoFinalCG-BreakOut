@@ -18,6 +18,9 @@ unsigned int g_nWidth = 1024, g_nHeight = 768;
 #include <AntTweakBar.h>
 TwBar *g_pToolBar;
 
+#include <Windows.h>
+#pragma comment(lib, "Winmm.lib")
+
 // Include GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -120,7 +123,7 @@ void CheckColisionCubos(Gerenciador & manager) {
 	bool colisionX_Box = false;
 	bool colisionY_Box = false;
 	for (int i = 0; i < manager.Cubos.size(); i++) {
-		if (manager.Bola.position.x + 1.5 >= manager.Cubos[i].position.x && manager.Cubos[i].position.x + 1.5 >= manager.Bola.position.x) {
+		if (manager.Bola.position.x + 1.6 >= manager.Cubos[i].position.x && manager.Cubos[i].position.x + 1.5 >= manager.Bola.position.x) {
 			colisionX_Box = true;
 		}
 		if (manager.Bola.position.y + 1.5 >= manager.Cubos[i].position.y && manager.Cubos[i].position.y + 1.5 >= manager.Bola.position.y) {
@@ -130,7 +133,7 @@ void CheckColisionCubos(Gerenciador & manager) {
 			float max = 0.0f;
 			int best_match = -1;
 			for (int i = 0; i < 4; i++) {
-				float dot_product = glm::dot(glm::normalize(manager.Bola.velocidade), compass[i]);
+				float dot_product = glm::dot(glm::normalize(manager.Bola.direcao), compass[i]);
 				if (dot_product > max)
 				{
 					max = dot_product;
@@ -139,11 +142,11 @@ void CheckColisionCubos(Gerenciador & manager) {
 			}
 			if (best_match == 1 || best_match == 3)
 			{
-				manager.Bola.velocidade.x = -manager.Bola.velocidade.x;
+				manager.Bola.direcao.x = -manager.Bola.direcao.x;
 			}
 			else
 			{
-				manager.Bola.velocidade.y = -manager.Bola.velocidade.y;
+				manager.Bola.direcao.y = -manager.Bola.direcao.y;
 			}
 			manager.Cubos.erase(manager.Cubos.begin() + i);
 		}
@@ -156,40 +159,40 @@ void CheckColisionPLayer(Gerenciador &manager) {
 	bool colisionX_Player = false;
 	bool colisionY_Player = false;
 	for (int i = 0; i < manager.Player.size(); i++) {
-		if (manager.Bola.position.x + 1.6666666666666 >= manager.Player[i].position.x && manager.Player[i].position.x + 1.111111111111111 >= manager.Bola.position.x) {
+		if (manager.Bola.position.x + 1.6 >= manager.Player[i].position.x && manager.Player[i].position.x + 1.0 >= manager.Bola.position.x) {
 			colisionX_Player = true;
 		}
-		if (manager.Bola.position.y + 2.1111111111111111 >= manager.Player[i].position.y && manager.Player[i].position.y + 1.555555555555555555 >= manager.Bola.position.y) {
+		if (manager.Bola.position.y + 2.0 >= manager.Player[i].position.y && manager.Player[i].position.y + 1.5 >= manager.Bola.position.y) {
 			colisionY_Player = true;
-		}
-		if (colisionX_Player && colisionY_Player) {
-			float max = 0.0f;
-			int best_match = -1;
-			for (int i = 0; i < 4; i++) {
-				float dot_product = glm::dot(glm::normalize(manager.Bola.velocidade), compass[i]);
-				if (dot_product > max)
-				{
-					max = dot_product;
-					best_match = i;
+			if (colisionX_Player && colisionY_Player) {
+				float max = 0.0f;
+				int best_match = -1;
+				for (int i = 0; i < 4; i++) {
+					float dot_product = glm::dot(glm::normalize(manager.Bola.direcao), compass[i]);
+					if (dot_product > max){
+						max = dot_product;
+						best_match = i;
+					}
+				}
+				if (best_match == 1 || best_match == 3){
+					manager.Bola.direcao.y = -manager.Bola.direcao.y;
+				}
+				else{
+					manager.Bola.direcao.x = -manager.Bola.direcao.x;
 				}
 			}
-			if (best_match == 1 || best_match == 3)
-			{
-				manager.Bola.velocidade.y = -manager.Bola.velocidade.y;
-			}
-			else
-			{
-				manager.Bola.velocidade.x = -manager.Bola.velocidade.x;
-			}
+			colisionX_Player = false;
+			colisionY_Player = false;
 		}
-		colisionX_Player = false;
-		colisionY_Player = false;
 	}
 }
 
 int main(void){
-	float direcao = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	direcao = direcao / 0.5;
+
+	mciSendString("open \"mesh/som1.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
+
+	//mciSendString("stop mp3", NULL, 0, NULL);
+	//mciSendString("close mp3", NULL, 0, NULL);
 
 	int nUseMouse = 0;
 
@@ -290,7 +293,8 @@ int main(void){
 	GLuint LightID = glGetUniformLocation(programID, "LightPosition_worldspace");
 	manager.Bola.idMalha = 0;
 	manager.Bola.position = vec3(2, 1, 0);
-	manager.Bola.velocidade = vec3(0.02222222222222,0.02222222222222,0);
+	manager.Bola.direcao = vec3(1,1,0);
+	manager.Bola.velocidade = 8;
 	manager.Player.push_back(Modelo(2, vec3(-2, -10, 0)));
 	manager.Player.push_back(Modelo(2, vec3(0, -10, 0)));
 	manager.Player.push_back(Modelo(2, vec3(2, -10, 0)));
@@ -301,54 +305,83 @@ int main(void){
 
 	// For speed computation
 	double lastTime = glfwGetTime();
+	double inicio = glfwGetTime();
+	double now = glfwGetTime();
 	int nbFrames    = 0;
+	bool louco = false;
 
+	mciSendString("play mp3", NULL, 0, NULL);
+
+	float cor1 = 0.0, cor2 = 0.0, cor3 = 0.0;
+	int vidas = 3;
 	do{
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		if (glfwGetKey(g_pWindow, GLFW_KEY_D) != GLFW_PRESS) {
 			for (int i = 0; i < manager.Player.size(); i++) {
-				manager.Player[i].position.x = manager.Player[i].position.x - 0.03f;
+				manager.Player[i].position.x = manager.Player[i].position.x - 0.0444444f;
 			}
 		}
 		if (glfwGetKey(g_pWindow, GLFW_KEY_A) != GLFW_PRESS) {
 			for (int i = 0; i < manager.Player.size(); i++) {
-				manager.Player[i].position.x = manager.Player[i].position.x + 0.03f;
+				manager.Player[i].position.x = manager.Player[i].position.x + 0.0444444f;
 			}
 		}
 
-		if (manager.Bola.position.x >= 24 || manager.Bola.position.x <= -24) {
-			manager.Bola.velocidade.x = manager.Bola.velocidade.x * -1.0f;
+		if (now - inicio >= 27 || now - inicio >= 102) {
+			louco = true;
 		}
-		else if (manager.Bola.position.y >= 24) {
-			manager.Bola.velocidade.y = manager.Bola.velocidade.y * -1.0f;
+		if (now - inicio >= 59 || now - inicio >= 120) {
+			louco = false;
+			cor1 = 0;
+			cor2 = 0;
+			cor3 = 0;
 		}
+		if (now - inicio >= 136) {
+			inicio = glfwGetTime();
+			louco = true;
+		}
+
+
+		if (louco){
+			manager.Bola.angle = manager.Bola.angle+1;
+			cor1 += 0.01;
+			cor2 += 0.02;
+			cor3 += 0.03;
+			glClearColor(cor1, 0, cor3, 0.0f);
+			if (cor1 >= 0.7) cor1 = 0.0;
+			if (cor2 >= 0.7) cor2 = 0.0;
+			if (cor3 >= 0.7) cor3 = 0.0;
+			if (manager.Bola.angle >= 89.0f) manager.Bola.angle = 0.0f;
+		}
+
+		now = glfwGetTime();
+		manager.Bola.position += manager.Bola.direcao * manager.Bola.velocidade * (float)(now - lastTime);
+		lastTime = glfwGetTime();
 
 		CheckColisionPLayer(manager);
 		CheckColisionCubos(manager);
-		if (manager.Bola.position.y <= -11) {
-			manager.Bola.position = vec3(2, 1, 0);
-			manager.Bola.velocidade = vec3(0.02, 0.02, 0);
+		if (manager.Bola.position.x >= 24 || manager.Bola.position.x <= -24) {
+			manager.Bola.direcao.x = manager.Bola.direcao.x * -1.0f;
 		}
-
-		if (manager.Cubos.empty() && numCenario < 4) {
-			numCenario++;
+		if (manager.Bola.position.y >= 24) {
+			manager.Bola.direcao.y = manager.Bola.direcao.y * -1.0f;
+		}
+		if (manager.Bola.position.y <= -11) {//checa se a suzanne passou do limite inferior do mapa
+			manager.Bola.position = vec3(2, 1, 0);
+			manager.Bola.direcao = vec3(1, 1, 0);
+			vidas--;
+		}
+		if (vidas < 1) {
+			numCenario = 1;
 			ConstroiCenario(manager, numCenario);
 		}
-
-		manager.Bola.position = manager.Bola.position + manager.Bola.velocidade;
-
-		// Measure speed
-		double currentTime = glfwGetTime();
-		nbFrames++;
-		glUniform1f(glGetUniformLocation(programID, "time"), currentTime);
-
-		if (currentTime - lastTime >= 1.0){ // If last prinf() was more than 1sec ago
-			// printf and reset
-			printf("%f ms/frame\n", 1000.0 / double(nbFrames));
-			nbFrames  = 0;
-			lastTime += 1.0;
+		if (manager.Cubos.empty() && numCenario < 4) {
+			numCenario++;
+			vidas++;
+			manager.Bola.velocidade++;
+			ConstroiCenario(manager, numCenario);
 		}
 
 		manager.DesenhaCubos(manager, nUseMouse, programID, MatrixID, ViewMatrixID, ModelMatrixID, Texture, TextureID, LightID);

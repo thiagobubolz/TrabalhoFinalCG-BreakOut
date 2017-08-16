@@ -11,6 +11,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
 using namespace glm;
 
 #include <shader.hpp>
@@ -19,6 +20,7 @@ using namespace glm;
 #include <objloader.hpp>
 #include <vboindexer.hpp>
 #include <glerror.hpp>
+#include <glm/gtx/transform2.hpp>
 
 Gerenciador::Gerenciador(){
 }

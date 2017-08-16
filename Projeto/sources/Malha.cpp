@@ -19,6 +19,9 @@ Malha::Malha(int idMalha){
 	else if (idMalha == 2) {
 		loadOBJ("mesh/cube.obj", vertices, uvs, normals);
 	}
+	else if (idMalha == 3) {
+		loadOBJ("mesh/cube2.obj", vertices, uvs, normals);
+	}
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
 
 	glGenBuffers(1, &vertexbuffer);

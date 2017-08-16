@@ -26,7 +26,9 @@ public:
 	int idMalha;
 	glm::mat4 TransformacaoModelo;
 	vec3 position;
-	vec3 velocidade;
+	float velocidade;
+	vec3 direcao;
+	float angle;
 
 
 	Modelo::Modelo(int idMalha, glm::vec3 position);

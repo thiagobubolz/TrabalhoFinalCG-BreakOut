@@ -22,6 +22,6 @@ using namespace glm;
 Modelo::Modelo(int idMalha, glm::vec3 position){
 	this->idMalha = idMalha;
 	this->position = position;
-	this->velocidade = vec3(0);
 	this->TransformacaoModelo = translate(mat4(1.0f), position);
+	this->angle = 0.0;
 }
