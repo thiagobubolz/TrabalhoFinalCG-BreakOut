@@ -340,7 +340,10 @@ int main(void){
 		}
 		if (now - inicio >= 136) {
 			inicio = glfwGetTime();
-			louco = true;
+			louco = false;
+			mciSendString("close mp3", NULL, 0, NULL);
+			mciSendString("open \"mesh/som1.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
+			mciSendString("play mp3", NULL, 0, NULL);
 		}
 
 
@@ -370,10 +373,11 @@ int main(void){
 		}
 		if (manager.Bola.position.y <= -11) {//checa se a suzanne passou do limite inferior do mapa
 			manager.Bola.position = vec3(2, 1, 0);
-			manager.Bola.direcao = vec3(1, 1, 0);
+			manager.Bola.direcao = vec3(1.2, 1.2, 0);
 			vidas--;
 		}
 		if (vidas < 1) {
+			manager.Cubos.clear();
 			numCenario = 1;
 			ConstroiCenario(manager, numCenario);
 		}
